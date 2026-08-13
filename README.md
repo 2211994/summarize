@@ -1,4 +1,5 @@
 基于AutoCad的命令行工具accoreconsole.exe执行自动化批量的的DWG文件转化为PNG文件并导出。
+仅作为练手，由于是初学者，大部分代码由ai代劳，该项目只作为记录。
 核心流程为启动DWG2PNG_BATCH.bat——建立临时temp.scr——启动accoreconsole.exe——加载DWG2PNG_CORE.lsp——设置页面、发布PNG并保存。
 准备工作包括创建页面设置文件，并另存为YOLO_EXPORT.dwt，方便后续调用，PublishToWeb PNG.pc3则为AutoCad自带的打印设置。
 
