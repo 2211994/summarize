@@ -1,25 +1,44 @@
 基于AutoCad的命令行工具accoreconsole.exe执行自动化批量的的DWG文件转化为PNG文件并导出。
+
 仅作为练手，由于是初学者，大部分代码由ai代劳，该项目只作为记录。
+
 核心流程为启动DWG2PNG_BATCH.bat——建立临时temp.scr——启动accoreconsole.exe——加载DWG2PNG_CORE.lsp——设置页面、发布PNG并保存。
+
 准备工作包括创建页面设置文件，并另存为YOLO_EXPORT.dwt，方便后续调用，PublishToWeb PNG.pc3则为AutoCad自带的打印设置。
 
-bat：
+bat流程：
+
 由于文件中有中文名，所以设置chcp 65001 >nul避免中文乱码并且隐藏chcp的输出；
+
 setlocal enabledelayedexpansion开启延迟变量展开，因为后续会使用!COUNT!这类变量；
+
 设置AutoCAD Core Console 路径；
+
 设置DWG输入文件夹和PNG输出文件夹；
+
 定义了lsp路径（实际上没发挥作用，因为后续scr中重新写了lsp路径）；
+
 设置如果不存在输出路径，则创建；
+
 初始化计数器（set COUNT=0），每处理一个DWG，计数器+1（set /a COUNT+=1）；
+
 遍历 INPUT 文件夹下所有 .dwg 文件，获取当前 DWG 的文件名（以便后续输出PNG文件使用相同名称）；
+
 检查PNG是否存在，存在则跳过；
+
 创建临时scr：加载lsp，调用DWG2PNG_CORE，完成后quit并确认；
+
 启动accoreconsole.exe，打开dwg，执行scr；
+
 循环：处理完成切换下一个dwg；
+
 结束后暂停，按任意键退出。
 
-lsp：
+
+lsp流程：
+
 (defun c:DWG2PNG_CORE ( / dwgname outfile)定义DWG2PNG_CORE命令；
+
 (setq dwgname
   (vl-filename-base
     (getvar "DWGNAME")
